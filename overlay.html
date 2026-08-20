@@ -203,11 +203,11 @@
 
         let previousState = {};
 
-        matchRef.on('value', (snapshot) => {
+        // ИСПРАВЛЕНО: используем onValue вместо matchRef.on
+        onValue(matchRef, (snapshot) => {
             const data = snapshot.val();
             const statKeys = ['shots', 'fouls', 'offsides', 'corners', 'yellowCards', 'redCards'];
 
-            // Если данных нет (сброс), возвращаем всё в 0
             if (!data) {
                 document.getElementById('homeTeamName').textContent = 'Хозяева';
                 document.getElementById('awayTeamName').textContent = 'Гости';
@@ -230,11 +230,9 @@
                 return;
             }
 
-            // Названия
             if (data.homeTeam !== undefined) document.getElementById('homeTeamName').textContent = data.homeTeam || 'Хозяева';
             if (data.awayTeam !== undefined) document.getElementById('awayTeamName').textContent = data.awayTeam || 'Гости';
 
-            // Логотипы
             if (data.homeLogo !== undefined) {
                 const img = document.getElementById('homeLogoImg');
                 const txt = document.getElementById('homeLogoText');
@@ -248,7 +246,6 @@
                 else { img.style.display = 'none'; txt.style.display = 'block'; img.src = ''; }
             }
 
-            // Счёт
             if (data.homeScore !== undefined) {
                 const el = document.getElementById('homeScore');
                 const oldVal = previousState.homeScore || 0;
@@ -268,13 +265,11 @@
                 }
             }
 
-            // Статистика
             if (data.stats) {
                 statKeys.forEach(key => {
                     const homeEl = document.getElementById(`stat_${key}_home`);
                     const awayEl = document.getElementById(`stat_${key}_away`);
                     
-                    // Прямое чтение данных
                     let homeVal = 0;
                     let awayVal = 0;
                     
@@ -310,14 +305,12 @@
                     }
                 });
             } else {
-                // Обнуление если узла stats нет
                 statKeys.forEach(key => {
                     document.getElementById(`stat_${key}_home`).textContent = '0';
                     document.getElementById(`stat_${key}_away`).textContent = '0';
                 });
             }
 
-            // Владение
             if (data.possession) {
                 const home = data.possession.home || 50;
                 const away = data.possession.away || 50;
@@ -331,6 +324,7 @@
         });
 
         const connectedRef = ref(db, '.info/connected');
+        // ИСПРАВЛЕНО: используем onValue вместо connectedRef.on
         onValue(connectedRef, (snap) => {
             const dot = document.getElementById('statusDot');
             if (snap.val() === true) dot.classList.remove('disconnected');
