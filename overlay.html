@@ -11,9 +11,13 @@
             color: white;
             overflow: hidden;
             padding: 20px;
+            
+            /* === НАСТРОЙКИ ПОЗИЦИОНИРОВАНИЯ === */
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center; /* Центрирование по горизонтали */
+            justify-content: center; /* Центрирование по вертикали */
+            min-height: 100vh; /* Занимает всю высоту экрана OBS (1080px) */
         }
 
         .overlay-container {
@@ -25,6 +29,11 @@
             padding: 25px;
             backdrop-filter: blur(5px);
             animation: fadeIn 0.5s ease;
+            
+            /* Если нужно немного сдвинуть таблицу от идеального центра, 
+               используйте эти отступы (margin): */
+            /* margin-top: 100px;  Сдвинет таблицу вниз на 100px */
+            /* margin-bottom: 100px; Сдвинет таблицу вверх на 100px */
         }
 
         @keyframes fadeIn {
@@ -203,7 +212,6 @@
 
         let previousState = {};
 
-        // ИСПРАВЛЕНО: используем onValue вместо matchRef.on
         onValue(matchRef, (snapshot) => {
             const data = snapshot.val();
             const statKeys = ['shots', 'fouls', 'offsides', 'corners', 'yellowCards', 'redCards'];
@@ -324,7 +332,6 @@
         });
 
         const connectedRef = ref(db, '.info/connected');
-        // ИСПРАВЛЕНО: используем onValue вместо connectedRef.on
         onValue(connectedRef, (snap) => {
             const dot = document.getElementById('statusDot');
             if (snap.val() === true) dot.classList.remove('disconnected');
