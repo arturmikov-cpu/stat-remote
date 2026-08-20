@@ -43,119 +43,46 @@
             margin-bottom: 15px;
         }
 
-        .team-block {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            min-width: 0;
-        }
-
+        .team-block { display: flex; align-items: center; gap: 15px; min-width: 0; }
         .team-block.right { justify-content: flex-end; }
 
         .logo-container {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background-color: #333;
-            border: 2px solid #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            flex-shrink: 0;
+            width: 55px; height: 55px; border-radius: 50%; background-color: #333;
+            border: 2px solid #fff; display: flex; justify-content: center; align-items: center;
+            overflow: hidden; flex-shrink: 0;
         }
-
-        .logo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .logo-container img { width: 100%; height: 100%; object-fit: cover; }
 
         .team-name {
-            font-size: 24px;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 220px;
+            font-size: 24px; font-weight: bold; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis; max-width: 220px;
         }
 
-        .score-block {
-            font-size: 40px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
-        }
-
+        .score-block { font-size: 40px; font-weight: 900; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
         .score-item {
-            background: #fff;
-            color: #000;
-            padding: 2px 12px;
-            border-radius: 6px;
-            min-width: 45px;
-            text-align: center;
-            transition: all 0.3s;
+            background: #fff; color: #000; padding: 2px 12px; border-radius: 6px;
+            min-width: 45px; text-align: center; transition: all 0.3s;
         }
-
-        .score-item.goal-flash {
-            animation: goalFlash 1.5s ease;
-        }
+        .score-item.goal-flash { animation: goalFlash 1.5s ease; }
 
         @keyframes goalFlash {
-            0% { transform: scale(1); background: #4caf50; color: white; }
+            0% { transform: scale(1); background: #fff; color: #000; }
             50% { transform: scale(1.3); background: #4caf50; color: white; }
             100% { transform: scale(1); background: #fff; color: #000; }
         }
 
-        /* Таймер */
-        .timer-bar {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .timer {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 20px;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-        }
-
         /* Статистика */
-        .stats-container {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
+        .stats-container { display: flex; flex-direction: column; gap: 5px; }
         .stat-row {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr 1fr;
-            align-items: center;
-            padding: 10px 5px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: grid; grid-template-columns: 1fr 1.5fr 1fr; align-items: center;
+            padding: 10px 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-
         .stat-row:last-child { border-bottom: none; }
 
-        .stat-home, .stat-away {
-            font-size: 22px;
-            font-weight: bold;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
+        .stat-home, .stat-away { font-size: 22px; font-weight: bold; text-align: center; transition: color 0.3s; }
         .stat-home { color: #4caf50; }
         .stat-away { color: #2196f3; }
-
-        .stat-value-changed {
-            animation: statPulse 0.5s ease;
-        }
+        .stat-value-changed { animation: statPulse 0.5s ease; }
 
         @keyframes statPulse {
             0% { transform: scale(1); }
@@ -163,78 +90,25 @@
             100% { transform: scale(1); }
         }
 
-        .stat-label {
-            font-size: 16px;
-            color: #ccc;
-            text-transform: uppercase;
-            text-align: center;
-            letter-spacing: 1px;
-        }
+        .stat-label { font-size: 16px; color: #ccc; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
 
         /* Владение */
-        .possession-block {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .possession-label {
-            color: #ccc;
-            font-size: 14px;
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        .possession-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
+        .possession-block { margin-top: 15px; padding-top: 15px; border-top: 2px solid rgba(255, 255, 255, 0.2); }
+        .possession-label { color: #ccc; font-size: 14px; text-transform: uppercase; text-align: center; margin-bottom: 8px; }
+        .possession-labels { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: bold; font-size: 18px; }
         .possession-labels .home { color: #4caf50; }
         .possession-labels .away { color: #2196f3; }
 
-        .possession-bar {
-            width: 100%;
-            height: 10px;
-            background: #444;
-            border-radius: 5px;
-            overflow: hidden;
-            display: flex;
-        }
-
-        .possession-home {
-            background: #4caf50;
-            height: 100%;
-            transition: width 0.5s ease;
-        }
-
-        .possession-away {
-            background: #2196f3;
-            height: 100%;
-            transition: width 0.5s ease;
-        }
+        .possession-bar { width: 100%; height: 10px; background: #444; border-radius: 5px; overflow: hidden; display: flex; }
+        .possession-home { background: #4caf50; height: 100%; transition: width 0.5s ease; }
+        .possession-away { background: #2196f3; height: 100%; transition: width 0.5s ease; }
 
         /* Индикатор подключения */
         .status-dot {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #4caf50;
-            animation: blink 2s infinite;
+            position: fixed; top: 10px; right: 10px; width: 8px; height: 8px;
+            border-radius: 50%; background: #4caf50; animation: blink 2s infinite;
         }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0.3; }
-        }
-
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0.3; } }
         .status-dot.disconnected { background: #f44336; }
     </style>
 </head>
@@ -265,11 +139,6 @@
                     <span id="awayLogoText" style="font-size:9px;color:#aaa;">Лого</span>
                 </div>
             </div>
-        </div>
-
-        <!-- Таймер -->
-        <div class="timer-bar">
-            <div class="timer" id="matchTimer">00:00</div>
         </div>
 
         <!-- Статистика -->
@@ -320,43 +189,73 @@
         </div>
     </div>
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-    <script src="firebase-config.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    <script>
-        // Инициализация Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const matchRef = db.ref('match');
+        const firebaseConfig = {
+            apiKey: "AIzaSyCxRWPH50Jl-K290hLikKZAA41qeuP8s9c",
+            authDomain: "stat-remote.firebaseapp.com",
+            databaseURL: "https://stat-remote-default-rtdb.firebaseio.com",
+            projectId: "stat-remote",
+            storageBucket: "stat-remote.firebasestorage.app",
+            messagingSenderId: "702880337194",
+            appId: "1:702880337194:web:fc1b4db5fdfbbdb9416253",
+            measurementId: "G-7S554X0ZVQ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const matchRef = ref(db, 'match');
 
         let previousState = {};
 
-        // ===== ОСНОВНОЙ СЛУШАТЕЛЬ =====
         matchRef.on('value', (snapshot) => {
             const data = snapshot.val();
-            if (!data) return;
+            const statKeys = ['shots', 'fouls', 'offsides', 'corners', 'yellowCards', 'redCards'];
 
-            // Обновляем команды
-            if (data.homeTeam) document.getElementById('homeTeamName').textContent = data.homeTeam;
-            if (data.awayTeam) document.getElementById('awayTeamName').textContent = data.awayTeam;
+            // Если база пуста (сброшена), возвращаем табло в исходное состояние
+            if (!data) {
+                document.getElementById('homeTeamName').textContent = 'Хозяева';
+                document.getElementById('awayTeamName').textContent = 'Гости';
+                document.getElementById('homeLogoImg').style.display = 'none';
+                document.getElementById('homeLogoText').style.display = 'block';
+                document.getElementById('awayLogoImg').style.display = 'none';
+                document.getElementById('awayLogoText').style.display = 'block';
+                document.getElementById('homeScore').textContent = '0';
+                document.getElementById('awayScore').textContent = '0';
+                document.getElementById('possHomeVal').textContent = '50%';
+                document.getElementById('possAwayVal').textContent = '50%';
+                document.getElementById('possHomeBar').style.width = '50%';
+                document.getElementById('possAwayBar').style.width = '50%';
+                
+                statKeys.forEach(key => {
+                    document.getElementById(`stat_${key}_home`).textContent = '0';
+                    document.getElementById(`stat_${key}_away`).textContent = '0';
+                });
+                previousState = {};
+                return;
+            }
+
+            // Команды
+            if (data.homeTeam !== undefined) document.getElementById('homeTeamName').textContent = data.homeTeam || 'Хозяева';
+            if (data.awayTeam !== undefined) document.getElementById('awayTeamName').textContent = data.awayTeam || 'Гости';
 
             // Логотипы
-            if (data.homeLogo) {
+            if (data.homeLogo !== undefined) {
                 const img = document.getElementById('homeLogoImg');
-                img.src = data.homeLogo;
-                img.style.display = 'block';
-                document.getElementById('homeLogoText').style.display = 'none';
+                const txt = document.getElementById('homeLogoText');
+                if (data.homeLogo) { img.src = data.homeLogo; img.style.display = 'block'; txt.style.display = 'none'; } 
+                else { img.style.display = 'none'; txt.style.display = 'block'; img.src = ''; }
             }
-            if (data.awayLogo) {
+            if (data.awayLogo !== undefined) {
                 const img = document.getElementById('awayLogoImg');
-                img.src = data.awayLogo;
-                img.style.display = 'block';
-                document.getElementById('awayLogoText').style.display = 'none';
+                const txt = document.getElementById('awayLogoText');
+                if (data.awayLogo) { img.src = data.awayLogo; img.style.display = 'block'; txt.style.display = 'none'; } 
+                else { img.style.display = 'none'; txt.style.display = 'block'; img.src = ''; }
             }
 
-            // Счёт с анимацией гола
+            // Счёт
             if (data.homeScore !== undefined) {
                 const el = document.getElementById('homeScore');
                 const oldVal = previousState.homeScore || 0;
@@ -366,7 +265,6 @@
                     setTimeout(() => el.classList.remove('goal-flash'), 1600);
                 }
             }
-
             if (data.awayScore !== undefined) {
                 const el = document.getElementById('awayScore');
                 const oldVal = previousState.awayScore || 0;
@@ -377,14 +275,8 @@
                 }
             }
 
-            // Таймер
-            if (data.timer) {
-                updateTimerDisplay(data.timer.seconds || 0);
-            }
-
             // Статистика
             if (data.stats) {
-                const statKeys = ['shots', 'fouls', 'offsides', 'corners', 'yellowCards', 'redCards'];
                 statKeys.forEach(key => {
                     if (data.stats[key]) {
                         const homeEl = document.getElementById(`stat_${key}_home`);
@@ -399,7 +291,6 @@
                                 setTimeout(() => homeEl.classList.remove('stat-value-changed'), 500);
                             }
                         }
-
                         if (awayEl) {
                             awayEl.textContent = data.stats[key].away || 0;
                             if (data.stats[key].away > oldAway) {
@@ -421,58 +312,15 @@
                 document.getElementById('possAwayBar').style.width = away + '%';
             }
 
-            // Сохраняем предыдущее состояние
             previousState = JSON.parse(JSON.stringify(data));
         });
 
-        // Обработка отключения
-        matchRef.on('child_removed', () => {
-            // База очищена
-        });
-
-        // ===== ТАЙМЕР (локальный тик) =====
-        let lastKnownSeconds = 0;
-        let isTimerRunning = false;
-        let localTimerInterval = null;
-
-        function updateTimerDisplay(seconds) {
-            lastKnownSeconds = seconds;
-            const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
-            const secs = (seconds % 60).toString().padStart(2, '0');
-            document.getElementById('matchTimer').textContent = `${mins}:${secs}`;
-        }
-
-        // Слушаем изменения таймера отдельно для более плавного обновления
-        matchRef.child('timer').on('value', (snapshot) => {
-            const timerData = snapshot.val();
-            if (timerData) {
-                if (timerData.running && !isTimerRunning) {
-                    // Таймер запущен — стартуем локальный интервал
-                    isTimerRunning = true;
-                    if (localTimerInterval) clearInterval(localTimerInterval);
-                    localTimerInterval = setInterval(() => {
-                        lastKnownSeconds++;
-                        const mins = Math.floor(lastKnownSeconds / 60).toString().padStart(2, '0');
-                        const secs = (lastKnownSeconds % 60).toString().padStart(2, '0');
-                        document.getElementById('matchTimer').textContent = `${mins}:${secs}`;
-                    }, 1000);
-                } else if (!timerData.running && isTimerRunning) {
-                    // Таймер остановлен
-                    isTimerRunning = false;
-                    if (localTimerInterval) clearInterval(localTimerInterval);
-                }
-                updateTimerDisplay(timerData.seconds || 0);
-            }
-        });
-
-        // ===== СОСТОЯНИЕ ПОДКЛЮЧЕНИЯ =====
-        db.ref('.info/connected').on('value', (snap) => {
+        // Индикатор подключения
+        const connectedRef = ref(db, '.info/connected');
+        onValue(connectedRef, (snap) => {
             const dot = document.getElementById('statusDot');
-            if (snap.val() === true) {
-                dot.classList.remove('disconnected');
-            } else {
-                dot.classList.add('disconnected');
-            }
+            if (snap.val() === true) dot.classList.remove('disconnected');
+            else dot.classList.add('disconnected');
         });
     </script>
 </body>
