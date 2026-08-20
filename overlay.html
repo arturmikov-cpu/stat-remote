@@ -32,7 +32,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Шапка со счётом */
         .header {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
@@ -71,7 +70,6 @@
             100% { transform: scale(1); background: #fff; color: #000; }
         }
 
-        /* Статистика */
         .stats-container { display: flex; flex-direction: column; gap: 5px; }
         .stat-row {
             display: grid; grid-template-columns: 1fr 1.5fr 1fr; align-items: center;
@@ -92,7 +90,6 @@
 
         .stat-label { font-size: 16px; color: #ccc; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
 
-        /* Владение */
         .possession-block { margin-top: 15px; padding-top: 15px; border-top: 2px solid rgba(255, 255, 255, 0.2); }
         .possession-label { color: #ccc; font-size: 14px; text-transform: uppercase; text-align: center; margin-bottom: 8px; }
         .possession-labels { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: bold; font-size: 18px; }
@@ -103,7 +100,6 @@
         .possession-home { background: #4caf50; height: 100%; transition: width 0.5s ease; }
         .possession-away { background: #2196f3; height: 100%; transition: width 0.5s ease; }
 
-        /* Индикатор подключения */
         .status-dot {
             position: fixed; top: 10px; right: 10px; width: 8px; height: 8px;
             border-radius: 50%; background: #4caf50; animation: blink 2s infinite;
@@ -116,7 +112,6 @@
     <div class="status-dot" id="statusDot"></div>
 
     <div class="overlay-container">
-        <!-- Шапка матча -->
         <div class="header">
             <div class="team-block">
                 <div class="logo-container">
@@ -141,7 +136,6 @@
             </div>
         </div>
 
-        <!-- Статистика -->
         <div class="stats-container" id="statsContainer">
             <div class="stat-row">
                 <div class="stat-home" id="stat_shots_home">0</div>
@@ -175,7 +169,6 @@
             </div>
         </div>
 
-        <!-- Владение мячом -->
         <div class="possession-block">
             <div class="possession-label">Владение мячом</div>
             <div class="possession-labels">
@@ -214,7 +207,6 @@
             const data = snapshot.val();
             const statKeys = ['shots', 'fouls', 'offsides', 'corners', 'yellowCards', 'redCards'];
 
-            // Если база пуста (сброшена), возвращаем табло в исходное состояние
             if (!data) {
                 document.getElementById('homeTeamName').textContent = 'Хозяева';
                 document.getElementById('awayTeamName').textContent = 'Гости';
@@ -237,11 +229,9 @@
                 return;
             }
 
-            // Команды
             if (data.homeTeam !== undefined) document.getElementById('homeTeamName').textContent = data.homeTeam || 'Хозяева';
             if (data.awayTeam !== undefined) document.getElementById('awayTeamName').textContent = data.awayTeam || 'Гости';
 
-            // Логотипы
             if (data.homeLogo !== undefined) {
                 const img = document.getElementById('homeLogoImg');
                 const txt = document.getElementById('homeLogoText');
@@ -255,7 +245,6 @@
                 else { img.style.display = 'none'; txt.style.display = 'block'; img.src = ''; }
             }
 
-            // Счёт
             if (data.homeScore !== undefined) {
                 const el = document.getElementById('homeScore');
                 const oldVal = previousState.homeScore || 0;
@@ -275,12 +264,13 @@
                 }
             }
 
-            // Статистика
+            // Усиленная логика чтения статистики
             if (data.stats) {
                 statKeys.forEach(key => {
+                    const homeEl = document.getElementById(`stat_${key}_home`);
+                    const awayEl = document.getElementById(`stat_${key}_away`);
+                    
                     if (data.stats[key]) {
-                        const homeEl = document.getElementById(`stat_${key}_home`);
-                        const awayEl = document.getElementById(`stat_${key}_away`);
                         const oldHome = previousState.stats?.[key]?.home || 0;
                         const oldAway = previousState.stats?.[key]?.away || 0;
 
@@ -298,11 +288,19 @@
                                 setTimeout(() => awayEl.classList.remove('stat-value-changed'), 500);
                             }
                         }
+                    } else {
+                        if (homeEl) homeEl.textContent = '0';
+                        if (awayEl) awayEl.textContent = '0';
                     }
+                });
+            } else {
+                // Если блока stats вообще нет, обнуляем
+                statKeys.forEach(key => {
+                    document.getElementById(`stat_${key}_home`).textContent = '0';
+                    document.getElementById(`stat_${key}_away`).textContent = '0';
                 });
             }
 
-            // Владение
             if (data.possession) {
                 const home = data.possession.home || 50;
                 const away = data.possession.away || 50;
@@ -315,7 +313,6 @@
             previousState = JSON.parse(JSON.stringify(data));
         });
 
-        // Индикатор подключения
         const connectedRef = ref(db, '.info/connected');
         onValue(connectedRef, (snap) => {
             const dot = document.getElementById('statusDot');
