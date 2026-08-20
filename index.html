@@ -61,7 +61,6 @@
             </div>
         </div>
 
-        <!-- СЧЁТ -->
         <div class="block-title">Счёт матча</div>
         <div class="control-row">
             <div class="team-ctrl left">
@@ -77,7 +76,6 @@
             </div>
         </div>
 
-        <!-- ВЛАДЕНИЕ -->
         <div class="block-title">Владение мячом (%)</div>
         <div class="control-row">
             <div class="team-ctrl left">
@@ -93,7 +91,6 @@
             </div>
         </div>
 
-        <!-- СТАТИСТИКА -->
         <div class="block-title">Статистика</div>
         <div id="statsContainer"></div>
 
@@ -134,7 +131,6 @@
 
         const statsContainer = document.getElementById('statsContainer');
 
-        // Генерация строк статистики
         statsConfig.forEach(stat => {
             const row = document.createElement('div');
             row.className = 'control-row';
@@ -154,13 +150,14 @@
             statsContainer.appendChild(row);
         });
 
-        // Обработка кликов
+        // Более надежный обработчик кликов
         document.body.addEventListener('click', (e) => {
-            if (e.target.tagName !== 'BUTTON') return;
+            const btn = e.target.closest('button');
+            if (!btn) return;
             
-            const action = e.target.dataset.action;
-            const team = e.target.dataset.team;
-            const isPlus = e.target.classList.contains('btn-plus');
+            const action = btn.dataset.action;
+            const team = btn.dataset.team;
+            const isPlus = btn.classList.contains('btn-plus');
             const delta = isPlus ? 1 : -1;
 
             if (action === 'score') {
@@ -168,7 +165,7 @@
                 update(ref(db, 'match'), { [`${team}Score`]: Math.max(0, currentVal + delta) });
             } 
             else if (action === 'stat') {
-                const statKey = e.target.dataset.stat;
+                const statKey = btn.dataset.stat;
                 const currentVal = parseInt(document.getElementById(`${team}-${statKey}`).innerText) || 0;
                 update(ref(db, `match/stats/${statKey}`), { [team]: Math.max(0, currentVal + delta) });
             } 
@@ -186,20 +183,17 @@
             }
         });
 
-        // Сброс всей статистики
         document.getElementById('resetAllBtn').addEventListener('click', () => {
             if (confirm('Вы уверены, что хотите сбросить ВСЮ статистику, счет, владение, названия и логотипы команд?')) {
                 remove(ref(db, 'match'));
             }
         });
 
-        // Обработка ввода названий
         document.body.addEventListener('input', (e) => {
             if (e.target.id === 'homeName') update(ref(db, 'match'), { homeTeam: e.target.value });
             if (e.target.id === 'awayName') update(ref(db, 'match'), { awayTeam: e.target.value });
         });
 
-        // Загрузка логотипов файлом (Base64)
         function handleLogoUpload(inputId, teamKey) {
             document.getElementById(inputId).addEventListener('change', (e) => {
                 const file = e.target.files[0];
@@ -214,12 +208,10 @@
         handleLogoUpload('homeLogoFile', 'home');
         handleLogoUpload('awayLogoFile', 'away');
 
-        // Синхронизация с БД
         const matchRef = ref(db, 'match');
         onValue(matchRef, (snapshot) => {
             const data = snapshot.val();
             
-            // Если данные стерты (сброс), возвращаем UI в исходное состояние
             if (!data) {
                 document.getElementById('homeName').value = '';
                 document.getElementById('awayName').value = '';
@@ -262,7 +254,6 @@
                     document.getElementById(`away-${stat.key}`).innerText = data.stats[stat.key]?.away || 0;
                 });
             } else {
-                // Если узел stats пустой, обнуляем значения
                 statsConfig.forEach(stat => {
                     document.getElementById(`home-${stat.key}`).innerText = '0';
                     document.getElementById(`away-${stat.key}`).innerText = '0';
