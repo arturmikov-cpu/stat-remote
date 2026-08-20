@@ -207,6 +207,7 @@
             const data = snapshot.val();
             const statKeys = ['shots', 'fouls', 'offsides', 'corners', 'yellowCards', 'redCards'];
 
+            // Если данных нет (сброс), возвращаем всё в 0
             if (!data) {
                 document.getElementById('homeTeamName').textContent = 'Хозяева';
                 document.getElementById('awayTeamName').textContent = 'Гости';
@@ -229,9 +230,11 @@
                 return;
             }
 
+            // Названия
             if (data.homeTeam !== undefined) document.getElementById('homeTeamName').textContent = data.homeTeam || 'Хозяева';
             if (data.awayTeam !== undefined) document.getElementById('awayTeamName').textContent = data.awayTeam || 'Гости';
 
+            // Логотипы
             if (data.homeLogo !== undefined) {
                 const img = document.getElementById('homeLogoImg');
                 const txt = document.getElementById('homeLogoText');
@@ -245,6 +248,7 @@
                 else { img.style.display = 'none'; txt.style.display = 'block'; img.src = ''; }
             }
 
+            // Счёт
             if (data.homeScore !== undefined) {
                 const el = document.getElementById('homeScore');
                 const oldVal = previousState.homeScore || 0;
@@ -264,16 +268,31 @@
                 }
             }
 
+            // Статистика
             if (data.stats) {
                 statKeys.forEach(key => {
                     const homeEl = document.getElementById(`stat_${key}_home`);
                     const awayEl = document.getElementById(`stat_${key}_away`);
                     
-                    // ВЕРНУЛИ ЧТЕНИЕ ИЗ ПЕРВОЙ РАБОЧЕЙ СТРУКТУРЫ: match/stats/{team}/{stat}
-                    const homeVal = data.stats.home?.[key] || 0;
-                    const awayVal = data.stats.away?.[key] || 0;
-                    const oldHome = previousState.stats?.home?.[key] || 0;
-                    const oldAway = previousState.stats?.away?.[key] || 0;
+                    // Прямое чтение данных
+                    let homeVal = 0;
+                    let awayVal = 0;
+                    
+                    if (data.stats.home && data.stats.home[key]) {
+                        homeVal = data.stats.home[key];
+                    }
+                    if (data.stats.away && data.stats.away[key]) {
+                        awayVal = data.stats.away[key];
+                    }
+
+                    let oldHome = 0;
+                    let oldAway = 0;
+                    if (previousState.stats && previousState.stats.home && previousState.stats.home[key]) {
+                        oldHome = previousState.stats.home[key];
+                    }
+                    if (previousState.stats && previousState.stats.away && previousState.stats.away[key]) {
+                        oldAway = previousState.stats.away[key];
+                    }
 
                     if (homeEl) {
                         homeEl.textContent = homeVal;
@@ -291,12 +310,14 @@
                     }
                 });
             } else {
+                // Обнуление если узла stats нет
                 statKeys.forEach(key => {
                     document.getElementById(`stat_${key}_home`).textContent = '0';
                     document.getElementById(`stat_${key}_away`).textContent = '0';
                 });
             }
 
+            // Владение
             if (data.possession) {
                 const home = data.possession.home || 50;
                 const away = data.possession.away || 50;
